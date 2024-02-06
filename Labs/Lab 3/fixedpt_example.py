@@ -24,12 +24,12 @@ def fixedpt(f,x0,tol,Nmax):
     
 
 # use routines 
-f1 = lambda x: 1+0.5*np.sin(x)
+f1 = lambda x: x*(1+(7-x**5)/x**2)**3
 ''' 
 fixed point is alpha1 = 1.4987....
 '''
 
-f2 = lambda x: 3+2*np.sin(x)
+f2 = lambda x: x - (x**5 -7)/x**2
 ''' 
 fixed point is alpha2 = 3.09... 
 '''
