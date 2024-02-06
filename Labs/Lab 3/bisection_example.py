@@ -68,12 +68,12 @@ def bisection(f,a,b,tol,Nmax):
     return [astar,ier] 
 
 # use routines    
-f = lambda x: x**3+x-4
-a = 1
-b = 4
+f = lambda x: ((x-1)**2)*(x-3)
+a = 0
+b = 2
 
 Nmax = 100
-tol = 1e-3
+tol = 1e-5
 
 [astar,ier] = bisection(f,a,b,tol,Nmax)
 print('the approximate root is',astar)
