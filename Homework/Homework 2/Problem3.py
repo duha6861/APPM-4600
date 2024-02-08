@@ -35,7 +35,7 @@ def e_taylor_series(x,N):
         y = y + x**i/math.factorial(i)
     return y-1
 
-n = 1
+n = 100
 poly_estimate = e_taylor_series(x0, n)
 
 print('Using a polynomial approximation of power', n, ',the estimated value is', poly_estimate)
