@@ -8,6 +8,7 @@ y = x - 4*np.sin(2*x) - 3
 plt.figure(1)
 plt.plot(x,y)
 plt.axhline(y=0, color="black")
+plt.axvline(x=0, color="black")
 plt.show()
 
 # Part (b)
@@ -39,7 +40,7 @@ Nmax = 100
 tol = 1e-11
 
 ''' test f1 '''
-x0_1 = -1
+x0_1 = -1.0
 [xstar1,ier1] = fixedpt(f1,x0_1,tol,Nmax)
 print('the approximate fixed point is:',xstar1)
 print('f1(xstar1):',f1(xstar1))
@@ -51,7 +52,7 @@ print('the approximate fixed point is:',xstar2)
 print('f1(xstar2):',f1(xstar2))
 print('Error message reads:',ier2)
 
-x0_3 = 2
+x0_3 = 2.0
 [xstar3,ier3] = fixedpt(f1,x0_3,tol,Nmax)
 print('the approximate fixed point is:',xstar3)
 print('f1(xstar3):',f1(xstar3))
