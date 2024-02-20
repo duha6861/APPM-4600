@@ -1,7 +1,7 @@
   # import libraries
 import numpy as np
 
-def bisection(f,a,b,tol,Nmax):
+def bisection_mod(f,fp,fpp,a,b,tol,Nmax):
 
     fa = f(a)
     fb = f(b)
@@ -25,6 +25,8 @@ def bisection(f,a,b,tol,Nmax):
     while (count < Nmax):
       c = 0.5*(a+b)
       fc = f(c)
+      fcp = fp(c)
+      fcpp = fpp(c)
 
       if (fc ==0):
         astar = c
@@ -41,7 +43,7 @@ def bisection(f,a,b,tol,Nmax):
         ier = 3
         return [astar, ier]
 
-      if (abs(b-a)<tol):
+      if (abs(fc*fcpp/fcp**2) < 1):
         astar = a
         ier =0
         return [astar, ier]
@@ -52,10 +54,13 @@ def bisection(f,a,b,tol,Nmax):
     ier = 2
     return [astar,ier] 
 
-def Newtons_mod(f,fp,x0,tol,Nmax):
+def Newtons_mod(f,fp,fpp,x0,tol,Nmax):
 
   p = np.zeros(Nmax+1)
   p[0] = p0
+
+
+
   for it in range(Nmax):
       p1 = p0-f(p0)/fp(p0)
       p[it+1] = p1
@@ -71,6 +76,7 @@ def Newtons_mod(f,fp,x0,tol,Nmax):
 # use routine
 f = lambda x: (x-2)**3
 fp = lambda x: 3*(x-2)**2
+fpp = lambda x: 6*(x-2)
 
 p0 = 1.2
 Nmax = 100
