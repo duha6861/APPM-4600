@@ -82,12 +82,10 @@ def CenDiff(f, s, h):
     f_prime = (f(s + h) - f(s - h))/(2*h)
     return (f_prime)
 
-def NewtonApprox(x0,tol,Nmax):
+def NewtonApprox(x0,h,tol,Nmax):
   
     ''' inputs: x0 = initial guess, tol = tolerance, Nmax = max its'''
     ''' Outputs: xstar= approx root, ier = error message, its = num its'''
-
-    h = 1e-7
 
     for its in range(Nmax):
        F = evalF(x0)
@@ -135,14 +133,25 @@ print('Lazy Newton: the error message reads:',ier)
 print('Lazy Newton: took this many seconds:',elapsed/20)
 print('Lazy Newton: number of iterations is:',its)
 
+h = 1e-7
 t = time.time()
 for j in range(20):
-  [xstar,ier,its] =  NewtonApprox(x0,tol,Nmax)
+  [xstar,ier,its] =  NewtonApprox(x0,h,tol,Nmax)
 elapsed = time.time()-t
 print(xstar)
-print('Approximate Newton: the error message reads:',ier)
-print('Approximate Newton: took this many seconds:',elapsed/20)
-print('Approximate Newton: number of iterations is:',its)
+print('Approximate Newton 1: the error message reads:',ier)
+print('Approximate Newton 1: took this many seconds:',elapsed/20)
+print('Approximate Newton 1: number of iterations is:',its)
+
+h = 1e-3
+t = time.time()
+for j in range(20):
+  [xstar,ier,its] =  NewtonApprox(x0,h,tol,Nmax)
+elapsed = time.time()-t
+print(xstar)
+print('Approximate Newton 2: the error message reads:',ier)
+print('Approximate Newton 2: took this many seconds:',elapsed/20)
+print('Approximate Newton 2: number of iterations is:',its)
 
 '''t = time.time()
 for j in range(20):
