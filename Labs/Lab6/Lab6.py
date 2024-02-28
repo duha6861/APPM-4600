@@ -83,9 +83,6 @@ def CenDiff(f, s, h):
     return (f_prime)
 
 def NewtonApprox(x0,h,tol,Nmax):
-  
-    ''' inputs: x0 = initial guess, tol = tolerance, Nmax = max its'''
-    ''' Outputs: xstar= approx root, ier = error message, its = num its'''
 
     for its in range(Nmax):
        F = evalF(x0)
@@ -108,6 +105,44 @@ def NewtonApprox(x0,h,tol,Nmax):
     xstar = x1
     ier = 1
     return[xstar,ier,its]
+
+def HybridNewton(x0,h,tol,Nmax):
+     
+    F = evalF(x0)
+    F1 = evalF(x0 + np.array([h, 0]))
+    F2 = evalF(x0 + np.array([0, h]))
+
+    J = np.array([[(F1[0]-F[0])/h, (F2[0]-F[0])/h],
+                     [(F1[1]-F[1])/h, (F2[1]-F[1])/h]])
+    Jinv = inv(J)
+    for its in range(Nmax):
+
+       F = evalF(x0)
+       
+       x1 = x0 - Jinv.dot(F)
+
+       if (norm(evalF(x1)) > norm(evalF(x0))):
+          h = h/2
+
+          F1 = evalF(x0 + np.array([h, 0]))
+          F2 = evalF(x0 + np.array([0, h]))
+
+          J = np.array([[(F1[0]-F[0])/h, (F2[0]-F[0])/h],
+                     [(F1[1]-F[1])/h, (F2[1]-F[1])/h]])
+          Jinv = inv(J)
+
+          x1 = x0 - Jinv.dot(F)
+       
+       if (norm(x1-x0) < tol):
+           xstar = x1
+           ier =0
+           return[xstar, ier,its]
+           
+       x0 = x1
+    
+    xstar = x1
+    ier = 1
+    return[xstar,ier,its]   
 
 # use routines
 x0 = np.array([0, 1])
@@ -153,12 +188,12 @@ print('Approximate Newton 2: the error message reads:',ier)
 print('Approximate Newton 2: took this many seconds:',elapsed/20)
 print('Approximate Newton 2: number of iterations is:',its)
 
-'''t = time.time()
+h = 1e-3
+t = time.time()
 for j in range(20):
-  [xstar,ier,its] = Broyden(x0, tol,Nmax)     
+  [xstar,ier,its] =  HybridNewton(x0,h,tol,Nmax)
 elapsed = time.time()-t
 print(xstar)
-print('Broyden: the error message reads:',ier)
-print('Broyden: took this many seconds:',elapsed/20)
-print('Broyden: number of iterations is:',its)'''
-     
+print('Hybrid Newton: the error message reads:',ier)
+print('Hybrid Newton: took this many seconds:',elapsed/20)
+print('Hybrid Newton: number of iterations is:',its)
