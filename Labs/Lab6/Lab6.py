@@ -150,15 +150,6 @@ x0 = np.array([0, 1])
 Nmax = 1000
 tol = 1e-10
 
-#t = time.time()
-#for j in range(20):
-  #[xstar,ier,its] =  Newton(x0,tol,Nmax)
-#elapsed = time.time()-t
-#print(xstar)
-#print('Newton: the error message reads:',ier)
-#print('Newton: took this many seconds:',elapsed/20)
-#print('Netwon: number of iterations is:',its)
- 
 t = time.time()
 for j in range(20):
   [xstar,ier,its] =  LazyNewton(x0,tol,Nmax)
