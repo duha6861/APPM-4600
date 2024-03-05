@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import numpy.linalg as la
 import matplotlib.pyplot as plt
 from numpy.linalg import inv
@@ -9,8 +10,8 @@ def driver():
     #f = lambda x: 1/(1 + (10*x)**2)
     f = lambda x: np.sinc(5*x)
 
-    N = 15
-    
+    N = 25
+
     ''' interval'''
     a = -1
     b = 1
@@ -18,6 +19,13 @@ def driver():
    
     ''' create equispaced interpolation nodes'''
     xint = np.linspace(a,b,N+1)
+
+    ''' different node spacing to negate Runge phenomena'''
+    '''xint = np.zeros( (N+1, 1) )
+    d = 0
+    for d in range(N+1):
+        xint[d] = np.cos(((2*d - 1) *math.pi) / (2*N))'''
+
     
     ''' create interpolation data'''
     yint = f(xint)

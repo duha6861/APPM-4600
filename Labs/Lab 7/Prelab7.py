@@ -7,8 +7,8 @@ def Vandermonde(x,y,N):
     i = 0
     j = 0
 
-    for i in N:
-        for j in N:
+    for i in range(N):
+        for j in range(N):
             V[i][j] = x[i]**j
     
     Vinv = inv(V)
