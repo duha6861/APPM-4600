@@ -9,7 +9,8 @@ def driver():
     #f = lambda x: 1/(1 + (10*x)**2)
     f = lambda x: np.sinc(5*x)
 
-    N = 25
+    N = 15
+    
     ''' interval'''
     a = -1
     b = 1
@@ -52,10 +53,10 @@ def driver():
        
 
     plt.figure()    
-    plt.plot(xeval,fex,'ro-')
-    plt.plot(xeval,yeval_l,'bs--') 
-    plt.plot(xeval,yeval_dd,'c.-')
-    plt.plot(xeval,yeval_mono, 'k')
+    plt.plot(xeval,fex,'ro-',label='f(x)')
+    plt.plot(xeval,yeval_l,'bs--',label='Lagrange') 
+    plt.plot(xeval,yeval_dd,'c.-',label='Newton DD')
+    plt.plot(xeval,yeval_mono, 'k',label='Monomial Expansion')
     plt.legend()
 
     plt.figure() 
