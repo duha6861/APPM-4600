@@ -1,7 +1,7 @@
 import numpy as np
 from numpy.linalg import inv
 
-def VAndermonde(x,y,N):
+def Vandermonde(x,y,N):
 
     V = np.zeros( (N, N) )
     i = 0
