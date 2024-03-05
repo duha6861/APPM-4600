@@ -6,9 +6,10 @@ from numpy.linalg import inv
 def driver():
 
 
-    f = lambda x: 1/(1 + (10*x)**2)
+    #f = lambda x: 1/(1 + (10*x)**2)
+    f = lambda x: np.sinc(5*x)
 
-    N = 11
+    N = 25
     ''' interval'''
     a = -1
     b = 1
@@ -42,7 +43,6 @@ def driver():
 
     a = MonoExpansion(xint, yint, len(xint))
 
-    yeval_mono = 0
     for i in range(N+1):
         yeval_mono = yeval_mono + a[i]*xeval**i
           
@@ -52,19 +52,19 @@ def driver():
        
 
     plt.figure()    
-    plt.plot(xeval,fex,'k')
-    plt.plot(xeval,yeval_l,'r') 
-    plt.plot(xeval,yeval_dd,'b')
-    plt.plot(xeval,yeval_mono, 'g')
+    plt.plot(xeval,fex,'ro-')
+    plt.plot(xeval,yeval_l,'bs--') 
+    plt.plot(xeval,yeval_dd,'c.-')
+    plt.plot(xeval,yeval_mono, 'k')
     plt.legend()
 
     plt.figure() 
     err_l = abs(yeval_l-fex)
     err_dd = abs(yeval_dd-fex)
     err_mono = abs(yeval_mono-fex)
-    plt.semilogy(xeval,err_l,'r',label='lagrange')
-    plt.semilogy(xeval,err_dd,'b',label='Newton DD')
-    plt.semilogy(xeval,err_mono,'g',label='Monomial Expansion')
+    plt.semilogy(xeval,err_l,'ro-',label='lagrange')
+    plt.semilogy(xeval,err_dd,'bs--',label='Newton DD')
+    plt.semilogy(xeval,err_mono,'k',label='Monomial Expansion')
 
     plt.legend()
     plt.show()
@@ -110,6 +110,7 @@ def evalDDpoly(xval, xint,y,N):
 
     return yeval
 
+'''Monomial Expansion'''
 def MonoExpansion(x,y,N):
 
     V = np.zeros( (N, N) )
