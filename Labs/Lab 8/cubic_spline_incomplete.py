@@ -7,8 +7,8 @@ from numpy.linalg import norm
 
 def driver():
     
-    f = lambda x: np.exp(x)
-    a = 0
+    f = lambda x: 1/(1 + (10*x)**2)
+    a = -1
     b = 1
     
     
@@ -68,9 +68,28 @@ def create_natural_spline(yint,xint,N):
 # This is made by filling one row at a time 
     A = np.zeros((N+1,N+1))
 
-    Ainv = 
+    A[0][0] = 1
+    A[N][N] = 1
+
+    i = 1
+
+    for i in range(N-1):
+        for j in range(N+1):
+
+            if j == i-1:
+                A[i][j] = h[i-1]
+
+            elif j == i:
+                A[i][j] = 2*(h[i] + h[i+1])
+
+            elif j == i+1:
+                A[i][j] = h[i+1]
+
+            
+
+    Ainv = inv(A)
     
-    M  = 
+    M  = np.dot(Ainv,b)
 
 #  Create the linear coefficients
     C = np.zeros(N)
