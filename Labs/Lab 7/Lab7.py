@@ -8,9 +8,9 @@ def driver():
 
 
     #f = lambda x: 1/(1 + (10*x)**2)
-    f = lambda x: np.sinc(5*x)
+    f = lambda x: 1/(1 + (10*x)**2)
 
-    N = 25
+    N = 20
 
     ''' interval'''
     a = -1
