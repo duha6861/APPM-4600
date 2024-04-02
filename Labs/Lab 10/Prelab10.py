@@ -10,7 +10,7 @@ def eval_legendre(n,x):
     p[1] = phi1
 
     for i in range(2,n):
-        p[i] = 1/(n+1) * ((2*n+1)*x*p[i-1] + n*p[i-2])
+        p[i] = 1/(i+1) * ((2*i+1)*x*p[i-1] + i*p[i-2])
 
     return(p)
 
