@@ -20,6 +20,12 @@ def eval_bary_lagrange(xeval,xint,yint):
     yeval = sum1/sum2
     return(yeval)
 
+def eval_phi(xeval,xint):
+    prod = 1
+    for i in range (len(xint)):
+        prod = prod * (xeval-xint[i])
+    return(prod)
+
 n = 15
 N = 1000
 
@@ -46,12 +52,25 @@ for j in range(len(xeval)):
     bary_lagrange2[j] = eval_bary_lagrange(xeval[j],cheby_xint,yint)
 
 
-plt.figure()
-plt.plot(xeval,fex,'o')
-plt.plot(xeval,bary_lagrange1)
-plt.plot(xeval,bary_lagrange2)
+plt.figure(1)
+plt.plot(xeval, fex, 'o', label = 'f(x)')
+plt.plot(xeval, bary_lagrange1, label = 'Equispaced Nodes')
+plt.plot(xeval, bary_lagrange2, label = "Chebyshev Nodes")
+plt.legend()
 plt.show()
 
+phi = np.zeros(len(xeval))
+cheby_phi = np.zeros(len(xeval))
+
+for j in range(len(xeval)):
+    phi[j] = eval_phi(xeval[j], xint)
+    cheby_phi[j] = eval_phi(xeval[j], cheby_xint)
+
+plt.figure(2)
+plt.semilogy(xeval, phi, label = 'Equispaced Nodes')
+plt.semilogy(xeval, cheby_phi, label = 'Chebyshev Nodes')
+plt.legend()
+plt.show()
 
 
 
