@@ -57,8 +57,8 @@ plt.figure(1)
 plt.plot(xint, yint, 'o', label = 'Equispaced Nodes')
 plt.plot(cheby_xint, cheby_yint, 'o', label = 'Chebysehv Nodes')
 plt.plot(xeval, fex, label = 'f(x)')
-plt.plot(xeval, bary_lagrange1, label = 'Equispaced Interpolent')
-plt.plot(xeval, bary_lagrange2, label = 'Chebyshev Interpolent')
+plt.plot(xeval, bary_lagrange1, label = 'Equispaced p(x)')
+plt.plot(xeval, bary_lagrange2, label = 'Chebyshev p(x)')
 plt.legend()
 plt.show()
 
@@ -74,8 +74,3 @@ plt.semilogy(xeval, phi, label = 'Equispaced Nodes')
 plt.semilogy(xeval, cheby_phi, label = 'Chebyshev Nodes')
 plt.legend()
 plt.show()
-
-
-
-
-
