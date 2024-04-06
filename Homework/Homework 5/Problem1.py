@@ -43,19 +43,22 @@ f = lambda x: 1/(1 + (16*x)**2)
 
 fex = f(xeval)
 yint = f(xint)
+cheby_yint = f(cheby_xint)
 
 bary_lagrange1 = np.zeros(len(xeval))
 bary_lagrange2 = np.zeros(len(xeval))
 
 for j in range(len(xeval)):
     bary_lagrange1[j] = eval_bary_lagrange(xeval[j],xint,yint)
-    bary_lagrange2[j] = eval_bary_lagrange(xeval[j],cheby_xint,yint)
+    bary_lagrange2[j] = eval_bary_lagrange(xeval[j],cheby_xint,cheby_yint)
 
 
 plt.figure(1)
-plt.plot(xeval, fex, 'o', label = 'f(x)')
-plt.plot(xeval, bary_lagrange1, label = 'Equispaced Nodes')
-plt.plot(xeval, bary_lagrange2, label = "Chebyshev Nodes")
+plt.plot(xint, yint, 'o', label = 'Equispaced Nodes')
+plt.plot(cheby_xint, cheby_yint, 'o', label = 'Chebysehv Nodes')
+plt.plot(xeval, fex, label = 'f(x)')
+plt.plot(xeval, bary_lagrange1, label = 'Equispaced Interpolent')
+plt.plot(xeval, bary_lagrange2, label = 'Chebyshev Interpolent')
 plt.legend()
 plt.show()
 
