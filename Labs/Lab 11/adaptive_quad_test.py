@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 # specify the quadrature method
 # (eval_gauss_quad, eval_composite_trap, eval_composite_simpsons)
 # method = eval_gauss_quad
-method = eval_composite_trap
-# method = eval_composite_simpsons
+# method = eval_composite_trap
+method = eval_composite_simpsons
 
 # interval of integration [a,b]
 # a = 0.; b = 1.
