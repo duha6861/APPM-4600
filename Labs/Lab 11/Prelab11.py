@@ -22,14 +22,3 @@ def comp_trapezoidal(a,b,N,f,f2):
     area = area + f(b)*h/2 #- (b - a)/12*h**2*f2(u)
 
     return(area)
-
-a = 0
-b = 2
-N = 100
-f = lambda x: x**2
-f2 = lambda x: 2
-
-area1 = trapezoidal(a,b,N,f)
-area2 = comp_trapezoidal(a,b,N,f,f2)
-
-print(area1,area2)
