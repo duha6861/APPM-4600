@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def KapurRoklin(f,a,b,N,m,y1,y2):
     h = (b-a)/(N-1)
@@ -76,3 +77,34 @@ area3 = KapurRoklin(f,a,b,N,m3,y10_1,y10_2)
 print('area1 is: ', area1)
 print('area2 is: ', area2)
 print('area3 is: ', area3)
+
+m = [m1, m2, m3]
+error1 = np.abs(-0.25 - area1)/0.25
+error2 = np.abs(-0.25 - area2)/0.25
+error3 = np.abs(-0.25 - area3)/0.25
+error = [error1, error2, error3]
+
+plt.figure(1)
+plt.plot(m,np.log10(error),'o-')
+plt.xlabel('m')
+plt.ylabel('Log base 10 of the relative error')
+plt.show()
+
+N_vector = np.arange(10,1000,5)
+error_m2 = np.zeros(len(N_vector))
+error_m6 = np.zeros(len(N_vector))
+error_m10 = np.zeros(len(N_vector))
+
+for i in range(len(N_vector)):
+    error_m2[i] = np.abs(-0.25 - KapurRoklin(f,a,b,N_vector[i],m1,y2_1,y2_2))/0.25
+    error_m6[i] = np.abs(-0.25 - KapurRoklin(f,a,b,N_vector[i],m2,y6_1,y6_2))/0.25
+    error_m10[i] = np.abs(-0.25 - KapurRoklin(f,a,b,N_vector[i],m3,y10_1,y10_2))/0.25
+
+plt.figure(2)
+plt.plot(N_vector, np.log10(error_m2), label = 'm = 2')
+plt.plot(N_vector, np.log10(error_m6), label = 'm = 6')
+plt.plot(N_vector, np.log10(error_m10), label = 'm = 10')
+plt.xlabel('Nodes, N')
+plt.ylabel('Log base 10 of the relative error')
+plt.legend()
+plt.show()
