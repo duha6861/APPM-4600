@@ -1,16 +1,22 @@
 import numpy as np
+import math as math
 
 def driver():
     a = -5
     b = 5
     f = lambda s: 1/(1 + s**2)
-    N = 1000
+    N_trap = 1000
+    N_simp = 1000
 
-    trap_area = comp_Trap(a,b,N,f)
+    print('Actual area is: 2arctan(5) = ', 2*math.atan(5))
+
+    trap_area = comp_Trap(a,b,N_trap,f)
     print('Area for composite trapezoidal is: ', trap_area)
+    print('Error is: ', np.abs(2*math.atan(5) - trap_area))
 
-    simp_area = comp_Simp(a,b,N,f)
+    simp_area = comp_Simp(a,b,N_simp,f)
     print("Area for composite Simpson's is:", simp_area)
+    print('Error is: ', np.abs(2*math.atan(5) - simp_area))
 
 def comp_Trap(a,b,N,f):
     h = (b-a)/N
@@ -23,9 +29,9 @@ def comp_Trap(a,b,N,f):
 
 
 def comp_Simp(a,b,N,f):
-    h = (b-a)/(2*N)
+    h = (b-a)/N
     area = f(a)
-    for i in range(1,2*N-1):
+    for i in range(1,N-1):
         if i%2 == 0:
             area = area + 2*f(a + i*h)
         else:
