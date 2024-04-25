@@ -7,8 +7,8 @@ def driver():
     f = lambda s: 1/(1 + s**2)
     f2 = lambda s: (-2*(-3*s**2 + 1))/((1+s**2)**3)
     f4 = lambda s: (24*(5*s**4 - 10*s**2 + 1)/((1+s**2)**5))
-    N_trap = 1000
-    N_simp = 1000
+    N_trap = 1291
+    N_simp = 108
 
     print('Actual area is: 2arctan(5) = ', 2*math.atan(5))
 
