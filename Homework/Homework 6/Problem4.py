@@ -28,7 +28,7 @@ def driver():
     sum = 0
 
     for i in range(len(t)):
-        for j in range(len(x)+1):
+        for j in range(len(x)):
             sum = sum + g(x[j],t[i])*w[j]
         print('Using Gauss-Laguerre for t =',t[i],' we get: ',sum) 
 
