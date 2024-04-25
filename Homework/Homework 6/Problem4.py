@@ -22,6 +22,16 @@ def driver():
         print('The error for the python quad funciton for t =',t[i],' is: ',error)
         print('The number of functions for t =',t[i],' is: ', info['neval'])
 
+    g = lambda x,t: x**(t-1)
+    n = 100
+    x,w = np.polynomial.laguerre.laggauss(n)
+    sum = 0
+
+    for i in range(len(t)):
+        for j in range(len(x)+1):
+            sum = sum + g(x[j],t[i])*w[j]
+        print('Using Gauss-Laguerre for t =',t[i],' we get: ',sum) 
+
 def comp_Trap(a,b,N,f,t):
     h = (b-a)/N
     area = f(a,t)
