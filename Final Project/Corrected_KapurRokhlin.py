@@ -1,19 +1,60 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def driver():
 
-
-    f = lambda x: x*np.log(x)
+    f = lambda x: x*np.log10(abs(x))
     a = 0
     b = 1
     n = 1000
-    m_values = [3,5,9,17,33]
+    m = 33
+    answer = -1/(4*np.log(10))
+
+    '''m_values = [3,5,9,17,33]
     area = np.zeros(len(m_values))
 
     for i in range(len(m_values)):
         area[i] = Trap_RH_Corrected(f,a,b,n,m_values[i])
+    print(area)'''
 
-    print(area)
+    k1 = 2
+    yk1 = [-0.6032109664493744, 0.751882338640025, 0.1073866830872157*20,
+        -0.7225370982867850]
+    area1 = Trap_RH_Corrected(f,a,b,n,m) + Gamma_sum(f,b,n,k1,yk1)
+    
+    k2 = 6
+    yk2 = [-0.8837770983721025, 0.4799117710681772*20, -0.1064623987147282*400,
+        0.1219590847580216*400, -0.7407035584542865*20, 0.2051970990601252*20,
+        0.2915391987686506*20, -0.8797979464048396*20, 0.1365562914252423*400,
+        -0.1157975479644601*400, 0.5130987287355766*20, -0.9342187797694916]
+    area2 = Trap_RH_Corrected(f,a,b,n,m) + Gamma_sum(f,b,n,k2,yk2)
+
+    k3 = 10
+    yk3 = [-0.1066655310499552*20, 0.1009036069527147*400, -0.4269031893958787*400,
+        0.1061953812152787*8000, -0.1715855846429547*8000, 0.1874446431742073*8000,
+        -0.1393153744796911*8000, 0.6872858265408605*400, -0.2096116396850468*400,
+        0.3256353919777872*20, 0.4576078100790908*20, -0.2469045273524281*400,
+        0.7648830198138171*400, -0.1508194558089468*8000, 0.1996415730837827*8000,
+        -0.1807965537141134*8000, 0.1110467735366555*8000, -0.4438764193424203*400,
+        0.1044548196545488*400, -0.1100328792904271*20]
+    area3 = Trap_RH_Corrected(f,a,b,n,m) + Gamma_sum(f,b,n,k3,yk3)
+
+    
+    print('area1 is: ', area1)
+    print('area2 is: ', area2)
+    print('area3 is: ', area3)
+
+    k = [k1, k2, k3]
+    error1 = np.abs(answer - area1)/answer
+    error2 = np.abs(answer - area2)/answer
+    error3 = np.abs(answer - area3)/answer
+    error = [abs(error1), abs(error2), abs(error3)]
+
+    plt.figure(1)
+    plt.plot(k,np.log10(error),'o-')
+    plt.xlabel('m')
+    plt.ylabel('Log base 10 of the relative error')
+    plt.show()
 
 def Bernouli_Weights(m):
     if m == 3:
@@ -69,10 +110,32 @@ def Trap_RH_Corrected(f,a,b,n,m):
         sum1 = sum1 + f(a + i*h)
     sum2 = 0
     B = Bernouli_Weights(m)
-    for l in range(1,(m-1)/2):
+    for l in range(1,int((m-1)/2)):
         sum2 = sum2 + (f(b-l*h) - f(b+l*h))*B[l-1]
     sum_total = sum1 + sum2
     area = sum_total*h
     return(area)
+
+def Gamma_sum(f,b,n,k,y):
+    h = b/(n-1)
+    sum1 = 0
+    for j in range(-k,k):
+        if j != 0:
+            if j < 0:
+                sum1 = sum1 + y[j+k]*f(j*h)
+            else:
+                sum1 = sum1 + y[j+k-1]*f(j*h)
+
+    sum2 = 0
+    for j in range(-k,k):
+        if j != 0:
+            if j < 0:
+                sum2 = sum2 + y[k-j-1]*f(j*h + b)
+            else:
+                sum2 = sum2 + y[k-j]*f(j*h + b)
+    
+    sum_total = sum1 + sum2
+    correction = sum_total*h
+    return(correction)
         
 driver()
