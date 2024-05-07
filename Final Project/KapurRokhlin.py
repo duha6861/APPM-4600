@@ -26,23 +26,39 @@ def KapurRoklin(f,a,b,N,m,y1,y2):
         area = area + f(i*h)
     area = h*(area + sum(v1) + sum(v2))
     return(area)
+
+def KapurRoklin2(f,a,b,N,m,y1,y2):
+    h = (b-a)/(N-1)
+    v1 = np.zeros(2*m)
+    v2 = np.zeros(2*m)
+    for i in range(-m,m):
+        if i != 0:
+            v1[i + m] = y1[i + m]*f(i*h)
+            v2[i + m] = y2[i + m]*f(i*h + b)
+
+    area = 0
+    for i in range(1,N-2):
+        area = area + f(i*h)
+    area = h*(area + sum(v1) + sum(v2))
+    return(area)
+
     
-f = lambda x: x*np.log(x)
+f = lambda x: np.cos(x)*np.log(abs(np.sin(x)))
 #f = lambda x: x*np.log(-x)
 #f = lambda x: np.cos(x)*np.log(np.sin(x))
 a = 0
 #a = -1
 #a = 0
-b = 1
+# b = 1
 #b = 0
-#b = np.pi
+b = np.pi
 N = 1000
 m1 = 2
 y2_1 = [-0.6032109664493744, 0.751882338640025, 1.073866830872157,
         -0.7225370982867850]
 y2_2 = [-0.7225370982867850, 1.073866830872157, 0.751882338640025,
         -0.6032109664493744]
-area1 = KapurRoklin(f,a,b,N,m1,y2_1,y2_2)
+area1 = KapurRoklin2(f,a,b,N,m1,y2_1,y2_2)
 
 m2 = 6
 y6_1 = [-0.8837770983721025, 0.4799117710681772*10, -0.1064623987147282*100,
@@ -54,7 +70,7 @@ y6_2 = [0.9342187797694916, 0.5130987287355766*10, -0.1157975479644601*100,
         0.1365562914252423*100, -0.8797979464048396*10, 0.2915391987686506*10,
         0.2051970990601252*10, -0.7407035584542865*10, 0.1219590847580216*100,
         -0.1064623987147282*100, 0.4799117710681772*10, -0.8837770983721025,]
-area2 = KapurRoklin(f,a,b,N,m2,y6_1, y6_2)
+area2 = KapurRoklin2(f,a,b,N,m2,y6_1, y6_2)
 
 m3 = 10
 y10_1 = [-0.1066655310499552*10, 0.1009036069527147*100, -0.4269031893958787*100,
@@ -72,7 +88,7 @@ y10_2 = [-0.1100328792904271*10, 0.1044548196545488*100, -0.4438764193424203*100
          0.6872858265408605*100, -0.1393153744796911*1000, 0.1874446431742073*1000,
          -0.1715855846429547*1000, 0.1061953812152787*1000, -0.4269031893958787*100,
          0.1009036069527147*100, -0.1066655310499552*10]
-area3 = KapurRoklin(f,a,b,N,m3,y10_1,y10_2)
+area3 = KapurRoklin2(f,a,b,N,m3,y10_1,y10_2)
 
 print('area1 is: ', area1)
 print('area2 is: ', area2)
@@ -101,9 +117,9 @@ for i in range(len(N_vector)):
     error_m10[i] = np.abs(-0.25 - KapurRoklin(f,a,b,N_vector[i],m3,y10_1,y10_2))/0.25
 
 plt.figure(2)
-plt.plot(N_vector, np.log10(error_m2), label = 'm = 2')
-plt.plot(N_vector, np.log10(error_m6), label = 'm = 6')
-plt.plot(N_vector, np.log10(error_m10), label = 'm = 10')
+plt.plot(np.log10(N_vector), np.log10(error_m2), label = 'm = 2')
+plt.plot(np.log10(N_vector), np.log10(error_m6), label = 'm = 6')
+plt.plot(np.log10(N_vector), np.log10(error_m10), label = 'm = 10')
 plt.xlabel('Nodes, N')
 plt.ylabel('Log base 10 of the relative error')
 plt.legend()
